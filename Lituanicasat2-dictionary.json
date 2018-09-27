@@ -1,0 +1,153 @@
+{
+    "name": "LITUANICASAT2",
+    "key": "LITUANICASAT2",
+    "measurements": [
+        {
+            "name": "OBCHeater1Temperature",
+            "key": "LITUANICASAT2.OBCHeater1Temperature",
+            "values": [
+                {
+                    "key": "value",
+                    "name": "Value",
+                    "units": "degrees",
+                    "format": "integer",
+                    "min": -100,
+                    "max": 100,
+                    "hints": {
+                        "range": 1
+                    }
+                },
+                {
+                    "key": "utc",
+                    "source": "timestamp",
+                    "name": "Timestamp",
+                    "format": "utc",
+                    "hints": {
+                        "domain": 1
+                    }
+                }
+            ]
+        },
+        {
+            "name": "OBCMCUTemperature",
+            "key": "LITUANICASAT2.OBCMCUTemperature",
+            "values": [
+                {
+                    "key": "value",
+                    "name": "Value",
+                    "units": "degrees",
+                    "format": "integer",
+                    "min": -100,
+                    "max": 100,
+                    "hints": {
+                        "range": 1
+                    }
+                },
+                {
+                    "key": "utc",
+                    "source": "timestamp",
+                    "name": "Timestamp",
+                    "format": "utc",
+                    "hints": {
+                        "domain": 1
+                    }
+                }
+                ]
+        },
+        {
+            "name": "COMMTranceiverTemp",
+            "key": "LITUANICASAT2.COMMTranceiverTemp",
+            "values": [
+                {
+                    "key": "value",
+                    "name": "Value",
+                    "units": "degrees",
+                    "format": "integer",
+                    "min": -100,
+                    "max": 100,
+                    "hints": {
+                        "range": 1
+                    }
+                },
+                {
+                    "key": "utc",
+                    "source": "timestamp",
+                    "name": "Timestamp",
+                    "format": "utc",
+                    "hints": {
+                        "domain": 1
+                    }
+                }
+                ]                
+        },     
+        
+        
+        {
+            "name": "ADCSStatusMode",
+            "key": "LITUANICASAT2.ADCSStatusMode",
+            "values": [ 
+                {
+                    "key": "value",
+                    "name": "Value",
+                    "units": "Values",
+                    "format": "string",
+                    "hints": {
+                        "range": 1
+                    }
+            
+                    
+                },
+                {
+                    "key": "utc",
+                    "source": "timestamp",
+                    "name": "Timestamp",
+                    "format": "utc",
+                    "hints": {
+                        "domain": 1
+                    }
+                }
+                ]
+            },
+        {
+            "name": "COMMModeSettings",
+            "key": "LITUANICASAT2.COMMModeSettings",
+            "values": [ 
+                {
+                    "key": "value",
+                    "name": "Value",
+                    "units": "degrees",
+                    "format": "enum",
+            
+                    "enumerations":[
+                                        {"value": 0, "string": "NOT INIT"},
+                                        {"value": 1, "string": "SLEEP"},
+                                        {"value": 2, "string": "IDLE"},
+                                        {"value": 3, "string": "RX"},
+                                        {"value": 4, "string": "TX"},
+                                        {"value": 5, "string": "CONTINOUS_TX"},
+                                        {"value": "NOT INIT", "string": "NOT INIT"},
+                                        {"value": "SLEEP", "string": "SLEEP"},
+                                        {"value": "IDLE", "string": "IDLE"},
+                                        {"value": "RX", "string": "RX"},
+                                        {"value": "TX", "string": "TX"},
+                                        {"value": "CONTINOUS_TX", "string":"CONTINOUS_TX"},
+                                        {"value": "CALIBRATION ERROR", "string": "ERROR CALIBRATION"}
+                                    ]
+                },
+                {
+                    "key": "utc",
+                    "source": "timestamp",
+                    "name": "Timestamp",
+                    "format": "utc",
+                    "hints": {
+                        "domain": 1
+                    }
+                }
+                ]
+            }
+         
+        ]
+    }
+
+
+

@@ -1,0 +1,19 @@
+{
+    "name":"Telemetry",
+    "identifier": "sc",
+    "subsystems": [
+        {
+            "name": "FS2017",
+            "identifier":"fs2017",
+            "measuraments":[
+                {
+                    "name":"obcT2",
+                    "identifier":"FS2017.obcT2",
+                    "units":"None",
+                    "type":"None"
+                }
+            ]
+        }
+
+    ]
+}
