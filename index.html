@@ -27,6 +27,9 @@
         <meta name="apple-mobile-web-app-capable" content="yes">
         <title>UNLAM GROUND SEGMENT SOFTWARE</title>
         <script src="bower_components/requirejs/require.js"> </script>
+        <script src="dictionary-plugin.js"></script>
+        <script src="historical-telemetry-plugin.js"></script>
+        <script src="realtime-telemetry-plugin.js"></script>
         <script>
             var THIRTY_MINUTES = 30 * 60 * 1000;
 
@@ -70,6 +73,12 @@
                 }));
                 openmct.install(openmct.plugins.SummaryWidget());
                 openmct.install(openmct.plugins.Notebook());
+
+                openmct.install(SpacecraftPlugin());
+                openmct.install(HistoricalTelemetryPlugin());
+                //openmct.install(RealtimeTelemetryPlugin());
+
+
                 openmct.time.clock('local', {start: -THIRTY_MINUTES, end: 0});
                 openmct.time.timeSystem('utc');
                 openmct.start();

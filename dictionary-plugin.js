@@ -158,7 +158,7 @@ var Lituanicasat2CompositionProvider = {
 
 function SpacecraftPlugin() {
     return function install(openmct) {
-        
+        console.log("Instalando spacecraft provider...")
         openmct.objects.addRoot({
             namespace: 'fs2017.spacecraft',
             key: 'spacecraft'
