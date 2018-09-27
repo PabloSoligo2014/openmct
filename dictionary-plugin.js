@@ -158,20 +158,19 @@ var Lituanicasat2CompositionProvider = {
 
 function SpacecraftPlugin() {
     return function install(openmct) {
-        console.log("Instalando spacecraft provider...")
         openmct.objects.addRoot({
             namespace: 'fs2017.spacecraft',
             key: 'spacecraft'
         });
-
+        
         openmct.objects.addRoot({
             namespace: 'lituanicasat2.spacecraft',
             key: 'spacecraft'
         });
-
+        
         openmct.objects.addProvider('fs2017.spacecraft', FS2017TelemetryMetadataProvider);
         openmct.objects.addProvider('lituanicasat2.spacecraft', Lituanicasat2TelemetryMetadataProvider);
-
+        
         openmct.types.addType('example.telemetry', {
             name: 'Telemetry',
             description: 'Telemetry point.',
@@ -180,6 +179,7 @@ function SpacecraftPlugin() {
 
         openmct.composition.addProvider(FS2017CompositionProvider);
         openmct.composition.addProvider(Lituanicasat2CompositionProvider);
+        
     }
 };
 
