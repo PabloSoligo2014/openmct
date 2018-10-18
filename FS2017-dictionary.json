@@ -51,6 +51,30 @@
                     }
                 }
             ]
+        },
+        {
+            "name": "obcT1",
+            "key": "FS2017.obcT1",
+            "values": [
+                {
+                    "key": "value",
+                    "name": "Value",
+                    "units": "℃",
+                    "format": "float",
+                    "hints": {
+                        "range": 1
+                    }
+                },
+                {
+                    "key": "utc",
+                    "source": "timestamp",
+                    "name": "Timestamp",
+                    "format": "utc",
+                    "hints": {
+                        "domain": 1
+                    }
+                }
+            ]
         }     
     ]
 }
