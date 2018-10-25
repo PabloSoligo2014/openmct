@@ -48,17 +48,35 @@ function DictionaryPlugin() {
 
 
 function getFS2017Dictionary() {
+    /*
     return http.get('/FS2017-dictionary.json')
         .then(function (result) {
             return result.data;
         });
+    */
+   
+   return http.get('http://localhost:8000/API/TlmyVarDict/FS2017')
+        .then(function (result) {
+            //console.log(result.data);
+            return result.data;
+
+        });
 }
 
 function getLituanicasat2Dictionary(){
+    
+    return http.get('http://localhost:8000/API/TlmyVarDict/LITUANICASAT2')
+    .then(function (result) {
+        //console.log(result.data);
+        return result.data;
+
+    });
+    /*
     return http.get('/Lituanicasat2-dictionary.json')
         .then(function (result) {
             return result.data;
         });
+        */
 }
 
 

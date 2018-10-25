@@ -13,6 +13,7 @@ function RealtimeTelemetryPlugin() {
             point = JSON.parse(event.data);
             //url = 
             console.log("Pidiendo real time tlmy", point, event);
+            point = '{id:"LITUANICASAT2.OBC_SW_WDT_ADCS_counter"}'
             if (listener[point.id]) {
                 listener[point.id](point);
             }
@@ -33,10 +34,11 @@ function RealtimeTelemetryPlugin() {
             subscribe: function (domainObject, callback) {
                 
                 listener[domainObject.identifier.key] = callback;
-                socket.send('subscribe ' + domainObject.identifier.key);
+                //socket.send('subscribe ' + domainObject.identifier.key);
+                socket.send(domainObject.identifier.key);
                 return function unsubscribe() {
                     delete listener[domainObject.identifier.key];
-                    socket.send('unsubscribe ' + domainObject.identifier.key);
+                    socket.send(domainObject.identifier.key);
                 };
             }
         };
