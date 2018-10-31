@@ -12,9 +12,11 @@ function RealtimeTelemetryPlugin() {
             console.log("Event", event);      
             point = JSON.parse(event.data);
             //url = 
-            console.log("Pidiendo real time tlmy", point, event);
-            point = '{id:"LITUANICASAT2.OBC_SW_WDT_ADCS_counter"}'
+            //point = '[{timestamp: 1538427929000.0, value: "2", id: "LITUANICASAT2.OBCMCUTemperature"},{timestamp: 1538427971000.0, value: "2", id: "LITUANICASAT2.OBCMCUTemperature"}]';
+            console.log("MUESTRO EVENT DATA", event.data);
+            
             if (listener[point.id]) {
+                console.log("LISTENER ENCONTRADOOOOO!!!!")
                 listener[point.id](point);
             }
         };
