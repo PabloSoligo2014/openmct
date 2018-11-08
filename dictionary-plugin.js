@@ -63,6 +63,23 @@ function getFS2017Dictionary() {
         });
 }
 
+
+function getTitaDictionary() {
+    /*
+    return http.get('/FS2017-dictionary.json')
+        .then(function (result) {
+            return result.data;
+        });
+    */
+   
+   return http.get('http://localhost:8000/API/TlmyVarDict/TITA')
+        .then(function (result) {
+            //console.log(result.data);
+            return result.data;
+
+        });
+}
+
 function getLituanicasat2Dictionary(){
     
     return http.get('http://localhost:8000/API/TlmyVarDict/LITUANICASAT2')
@@ -138,6 +155,36 @@ var FS2017TelemetryMetadataProvider = {
     }
 };
 
+var TitaTelemetryMetadataProvider = {
+    get: function (identifier) {
+        return getTitaDictionary().then(function (dictionary) {
+            if (identifier.key === 'spacecraft') {
+                //console.log("Dictname->",dictionary.name);
+                return {
+                    identifier: identifier,
+                    name: dictionary.name,
+                    type: 'folder',
+                    location: 'ROOT'
+                };
+            }else{
+                var measurement = dictionary.measurements.filter(function (m) {
+                    return m.key === identifier.key;
+                })[0];
+                return {
+                    identifier: identifier,
+                    name: measurement.name,
+                    type: 'example.telemetry',
+                    telemetry: {
+                        values: measurement.values
+                    },
+                    location: 'tita.spacecraft:spacecraft'
+                };
+            }
+        });
+    }
+};
+
+
 
 var FS2017CompositionProvider = {
     appliesTo: function (domainObject) {
@@ -173,6 +220,23 @@ var Lituanicasat2CompositionProvider = {
     }
 };
 
+var TitaCompositionProvider = {
+    appliesTo: function (domainObject) {
+        return domainObject.identifier.namespace === 'tita.spacecraft' && domainObject.type === 'folder';
+    },
+    load: function (domainObject) {
+        //Aca retorna las variables de telemetria, no los valores
+        return getTitaDictionary().then(function (dictionary) {
+                return dictionary.measurements.map(function (m) {
+                    return {
+                        namespace: 'tita.spacecraft',
+                        key: m.key
+                    };
+                });
+            });
+    }
+};
+
 
 function SpacecraftPlugin() {
     return function install(openmct) {
@@ -185,10 +249,18 @@ function SpacecraftPlugin() {
             namespace: 'lituanicasat2.spacecraft',
             key: 'spacecraft'
         });
+
+        openmct.objects.addRoot({
+            namespace: 'tita.spacecraft',
+            key: 'spacecraft'
+        });
+
         
         openmct.objects.addProvider('fs2017.spacecraft', FS2017TelemetryMetadataProvider);
         openmct.objects.addProvider('lituanicasat2.spacecraft', Lituanicasat2TelemetryMetadataProvider);
+        openmct.objects.addProvider('tita.spacecraft', TitaTelemetryMetadataProvider);
         
+
         openmct.types.addType('example.telemetry', {
             name: 'Telemetry',
             description: 'Telemetry point.',
@@ -197,6 +269,7 @@ function SpacecraftPlugin() {
 
         openmct.composition.addProvider(FS2017CompositionProvider);
         openmct.composition.addProvider(Lituanicasat2CompositionProvider);
+        openmct.composition.addProvider(TitaCompositionProvider);
         
     }
 };
