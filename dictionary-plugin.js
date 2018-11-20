@@ -1,3 +1,7 @@
+/*
+Nuevo documento para la integracion de la telemetria
+*/
+
 function getDictionary() {
     return http.get('/dictionary.json')
         .then(function (result) {
