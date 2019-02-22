@@ -2,6 +2,9 @@
 Nuevo documento para la integracion de la telemetria
 */
 
+const BASEURL = "http://localhost:12120/";
+   
+
 function getDictionary() {
     return http.get('/dictionary.json')
         .then(function (result) {
@@ -50,7 +53,6 @@ function DictionaryPlugin() {
 };
 
 
-
 function getFS2017Dictionary() {
     /*
     return http.get('/FS2017-dictionary.json')
@@ -58,8 +60,25 @@ function getFS2017Dictionary() {
             return result.data;
         });
     */
+   const url = BASEURL + "API/TlmyVarDict/FS2017";
+   return http.get(url)
+        .then(function (result) {
+            //console.log(result.data);
+            return result.data;
+
+        });
+}
+
+function getSACDDictionary() {
+    /*
+    return http.get('/FS2017-dictionary.json')
+        .then(function (result) {
+            return result.data;
+        });
+    */
+   const url = BASEURL + "API/TlmyVarDict/SACD";
    
-   return http.get('http://localhost:8000/API/TlmyVarDict/FS2017')
+   return http.get(url)
         .then(function (result) {
             //console.log(result.data);
             return result.data;
@@ -75,8 +94,8 @@ function getTitaDictionary() {
             return result.data;
         });
     */
-   
-   return http.get('http://localhost:8000/API/TlmyVarDict/TITA')
+   const url = BASEURL + "API/TlmyVarDict/TITA"; 
+   return http.get(url)
         .then(function (result) {
             //console.log(result.data);
             return result.data;
@@ -86,7 +105,8 @@ function getTitaDictionary() {
 
 function getLituanicasat2Dictionary(){
     
-    return http.get('http://localhost:8000/API/TlmyVarDict/LITUANICASAT2')
+    const url = BASEURL + "API/TlmyVarDict/TITA"
+    return http.get(url)
     .then(function (result) {
         //console.log(result.data);
         return result.data;
@@ -188,6 +208,35 @@ var TitaTelemetryMetadataProvider = {
     }
 };
 
+var SACDTelemetryMetadataProvider = {
+    get: function (identifier) {
+        return getSACDDictionary().then(function (dictionary) {
+            if (identifier.key === 'spacecraft') {
+                //console.log("Dictname->",dictionary.name);
+                return {
+                    identifier: identifier,
+                    name: dictionary.name,
+                    type: 'folder',
+                    location: 'ROOT'
+                };
+            }else{
+                var measurement = dictionary.measurements.filter(function (m) {
+                    return m.key === identifier.key;
+                })[0];
+                return {
+                    identifier: identifier,
+                    name: measurement.name,
+                    type: 'example.telemetry',
+                    telemetry: {
+                        values: measurement.values
+                    },
+                    location: 'sacd.spacecraft:spacecraft'
+                };
+            }
+        });
+    }
+};
+
 
 
 var FS2017CompositionProvider = {
@@ -241,6 +290,23 @@ var TitaCompositionProvider = {
     }
 };
 
+var SACDCompositionProvider = {
+    appliesTo: function (domainObject) {
+        return domainObject.identifier.namespace === 'sacd.spacecraft' && domainObject.type === 'folder';
+    },
+    load: function (domainObject) {
+        //Aca retorna las variables de telemetria, no los valores
+        return getSACDDictionary().then(function (dictionary) {
+                return dictionary.measurements.map(function (m) {
+                    return {
+                        namespace: 'sacd.spacecraft',
+                        key: m.key
+                    };
+                });
+            });
+    }
+};
+
 
 function SpacecraftPlugin() {
     return function install(openmct) {
@@ -259,10 +325,16 @@ function SpacecraftPlugin() {
             key: 'spacecraft'
         });
 
+        openmct.objects.addRoot({
+            namespace: 'sacd.spacecraft',
+            key: 'spacecraft'
+        });
+
         
         openmct.objects.addProvider('fs2017.spacecraft', FS2017TelemetryMetadataProvider);
         openmct.objects.addProvider('lituanicasat2.spacecraft', Lituanicasat2TelemetryMetadataProvider);
         openmct.objects.addProvider('tita.spacecraft', TitaTelemetryMetadataProvider);
+        openmct.objects.addProvider('sacd.spacecraft', SACDTelemetryMetadataProvider);
         
 
         openmct.types.addType('example.telemetry', {
@@ -274,6 +346,7 @@ function SpacecraftPlugin() {
         openmct.composition.addProvider(FS2017CompositionProvider);
         openmct.composition.addProvider(Lituanicasat2CompositionProvider);
         openmct.composition.addProvider(TitaCompositionProvider);
+        openmct.composition.addProvider(SACDCompositionProvider);
         
     }
 };

@@ -1,11 +1,15 @@
 /**
  * Basic Realtime telemetry plugin using websockets.
  */
+const BASEWSURL = "ws://localhost:12120/";
+
 function RealtimeTelemetryPlugin() {
     return function (openmct) {
         //var socket = new WebSocket(location.origin.replace(/^http/, 'ws') + '/realtime/');
         //ws://127.0.0.1:8000/TlmyVar/
-        var socket = new WebSocket('ws://127.0.0.1:8000/TlmyVar/');
+        
+        const url = BASEWSURL + "TlmyVar/";
+        var socket = new WebSocket(url);
         var listener = {};
         
         socket.onmessage = function (event) {      
