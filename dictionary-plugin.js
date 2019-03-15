@@ -2,8 +2,8 @@
 Nuevo documento para la integracion de la telemetria
 */
 
-const BASEURL = "http://localhost:12120/";
-   
+
+
 
 function getDictionary() {
     return http.get('/dictionary.json')

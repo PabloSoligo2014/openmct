@@ -1,7 +1,7 @@
 /**
  * Basic Realtime telemetry plugin using websockets.
  */
-const BASEWSURL = "ws://localhost:12120/";
+
 
 function RealtimeTelemetryPlugin() {
     return function (openmct) {

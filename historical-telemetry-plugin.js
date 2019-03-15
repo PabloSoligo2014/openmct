@@ -4,6 +4,7 @@
 
 
 
+
 function HistoricalTelemetryPlugin() {
     return function install (openmct) {
         
