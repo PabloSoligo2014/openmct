@@ -105,7 +105,8 @@ function getTitaDictionary() {
 
 function getLituanicasat2Dictionary(){
     
-    const url = BASEURL + "API/TlmyVarDict/TITA"
+    const url = BASEURL + "API/TlmyVarDict/LITUANICASAT2"
+
     return http.get(url)
     .then(function (result) {
         //console.log(result.data);
